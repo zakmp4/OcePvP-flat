@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OcePvP — Minecraft Minigames Server</title>
+<meta name="description" content="OcePvP is a Minecraft minigames server — Sumo, Spleef, Parkour, Pillars of Fortune, KOTH, Capture the Flag, BowKB and Bedwars. Join at ocepvp.xyz.">
+<link rel="icon" href="logo.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ================= TOP BAR ================= -->
+<div class="topbar">
+  <div class="shell">
+    <div class="status">
+      <i class="dot"></i>
+      <span>Minigames server &middot; <b style="color:var(--sky-soft)">ocepvp.xyz</b></span>
+    </div>
+    <div class="links">
+      <a href="games.html">Games</a>
+      <a href="rules.html">Rules</a>
+      <a href="support.html">Support</a>
+      <a href="https://discord.ocepvp.xyz">Discord</a>
+    </div>
+  </div>
+</div>
+
+<!-- ================= MASTHEAD ================= -->
+<header class="masthead">
+  <div class="shell">
+    <a class="brand" href="index.html">
+      <img src="logo.webp" alt="OcePvP logo">
+      <span class="name"><b>OcePvP</b><span>Minigames</span></span>
+    </a>
+
+    <nav class="main">
+      <a href="index.html" class="active">Home</a>
+      <a href="games.html">Games</a>
+      <a href="rules.html">Rules &amp; Policies</a>
+      <a href="support.html">Support</a>
+    </nav>
+
+    <div class="nav-right">
+      <button class="ip-chip" data-copy="ocepvp.xyz" title="Click to copy">
+        <span>SERVER IP</span><b>ocepvp.xyz</b>
+      </button>
+      <a class="btn btn-primary" href="#join">Play Now</a>
+      <button class="burger" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
+    </div>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="shell">
+    <div>
+      <span class="eyebrow"><i class="dot"></i> Minecraft minigames</span>
+      <h1>Queue up. Jump in. <span class="grad">Win the round.</span></h1>
+      <p class="lead">
+        OcePvP is a Minecraft minigames server. Hop into the lobby, pick a game, and you're in
+        a match — no setup, no grinding, just rounds.
+      </p>
+      <div class="hero-actions">
+        <button class="btn btn-primary" data-copy="ocepvp.xyz">Copy Server IP</button>
+        <a class="btn btn-ghost" href="games.html">Browse games</a>
+      </div>
+      <p style="color:var(--dim);font-size:14px;margin-top:22px">
+        <b style="color:var(--sky-soft)">ocepvp.xyz</b>
+        &nbsp;&middot;&nbsp; <a href="https://discord.ocepvp.xyz">discord.ocepvp.xyz</a>
+      </p>
+    </div>
+
+    <div class="hero-art">
+      <img src="logo.webp" alt="OcePvP">
+    </div>
+  </div>
+</section>
+
+<!-- ================= HOW TO JOIN ================= -->
+<section class="section" id="join">
+  <div class="shell">
+    <div class="section-head">
+      <div>
+        <div class="kicker">Getting in</div>
+        <h2>Three steps to your first match</h2>
+      </div>
+    </div>
+
+    <div class="grid-3 steps">
+      <div class="card step reveal">
+        <h3>Open Multiplayer</h3>
+        <p>Launch Minecraft and head to the Multiplayer screen.</p>
+      </div>
+      <div class="card step reveal">
+        <h3>Add the server</h3>
+        <p>Click <b style="color:var(--text)">Add Server</b> and type <code>ocepvp.xyz</code> as the address.</p>
+      </div>
+      <div class="card step reveal">
+        <h3>Pick a game</h3>
+        <p>Join, and choose a game from the lobby. You'll be in a queue straight away.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= GAMES PREVIEW ================= -->
+<section class="section" style="padding-top:0">
+  <div class="shell">
+    <div class="section-head">
+      <div>
+        <div class="kicker">What you can play</div>
+        <h2>Games</h2>
+      </div>
+      <a class="btn btn-ghost btn-sm" href="games.html">See all games</a>
+    </div>
+
+    <!-- filled in from games.js -->
+    <div class="game-grid" data-games data-games-limit="3"></div>
+  </div>
+</section>
+
+<!-- ================= ANNOUNCEMENTS / DISCORD ================= -->
+<section class="section" style="padding-top:0" id="announcements">
+  <div class="shell">
+    <div class="section-head">
+      <div>
+        <div class="kicker">Latest from the server</div>
+        <h2>Announcements</h2>
+        <p>Every update, new game and event is announced in our Discord.</p>
+      </div>
+    </div>
+
+    <div class="card discord-cta reveal">
+      <div class="discord-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M20.3 4.5A17 17 0 0 0 16 3.2l-.2.4a13 13 0 0 1 3.6 1.8 15.6 15.6 0 0 0-11-.6c-.6.2-1.1.4-1.6.6a13 13 0 0 1 3.7-1.8L10.3 3A17 17 0 0 0 6 4.5C3.2 8.6 2.4 12.6 2.8 16.5a17 17 0 0 0 5.2 2.6l1.1-1.7c-.7-.3-1.4-.6-2-1l.5-.4a12.2 12.2 0 0 0 10.8 0l.5.4c-.6.4-1.3.7-2 1l1.1 1.7a17 17 0 0 0 5.2-2.6c.5-4.5-.8-8.5-2.9-12zM9.3 14.3c-1 0-1.9-1-1.9-2.1s.8-2.1 1.9-2.1 1.9 1 1.9 2.1-.9 2.1-1.9 2.1zm5.4 0c-1 0-1.9-1-1.9-2.1s.8-2.1 1.9-2.1 1.9 1 1.9 2.1-.9 2.1-1.9 2.1z"/></svg>
+      </div>
+      <div class="discord-copy">
+        <h3>Join the OcePvP Discord</h3>
+        <p>Announcements, updates and events are all posted there first. It's also where you find parties, open support tickets and appeal punishments.</p>
+      </div>
+      <div class="discord-action">
+        <a class="btn btn-discord" href="https://discord.ocepvp.xyz">Join the Discord</a>
+        <span>discord.ocepvp.xyz</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CTA ================= -->
+<section class="section" style="padding-top:0">
+  <div class="shell">
+    <div class="card reveal" style="padding:56px 44px;text-align:center;background:linear-gradient(140deg,rgba(34,211,238,.14),rgba(4,6,12,.5))">
+      <div class="kicker">Ready?</div>
+      <h2 style="font-size:clamp(28px,3.4vw,42px)">Your next round starts at ocepvp.xyz</h2>
+      <p style="color:var(--muted);max-width:52ch;margin:0 auto 28px">
+        Copy the IP, add the server, and you're one click from a match.
+      </p>
+      <div class="hero-actions" style="justify-content:center">
+        <button class="btn btn-primary" data-copy="ocepvp.xyz">Copy ocepvp.xyz</button>
+        <a class="btn btn-ghost" href="games.html">Browse games</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="site">
+  <div class="shell">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <img src="logo.webp" alt="OcePvP">
+        <p>A Minecraft minigames server. Pick a game, jump in, win the round.</p>
+      </div>
+      <div>
+        <h5>Server</h5>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="games.html">Games</a></li>
+          <li><a href="rules.html">Rules &amp; Policies</a></li>
+          <li><a href="support.html">Support</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Community</h5>
+        <ul>
+          <li><a href="https://discord.ocepvp.xyz">Discord</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Info</h5>
+        <ul>
+          <li><a href="rules.html#conduct">Code of conduct</a></li>
+          <li><a href="rules.html#privacy">Privacy</a></li>
+          <li><a href="support.html#appeals">Ban appeals</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="foot-bottom">
+      <span>&copy; <span data-year></span> OcePvP. Not affiliated with Mojang Studios or Microsoft.</span>
+      <span>Server IP: <b style="color:var(--sky-soft)">ocepvp.xyz</b></span>
+    </div>
+  </div>
+</footer>
+
+<script src="games.js"></script>
+<script src="site.js"></script>
+</body>
+</html>
