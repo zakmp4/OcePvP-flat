@@ -133,8 +133,10 @@
   });
 })();
 
+
 /* ============================================================
-   SUGGESTION FORM (games.html) - sends to the Render API
+   SUGGESTION FORM (games.html)
+   Posts straight into Discord using the webhook in config.js.
    ============================================================ */
 (function () {
   "use strict";
@@ -147,6 +149,10 @@
   const details = document.getElementById("s_details");
   const counter = document.getElementById("s_count");
 
+  const COOLDOWN_MS = 60 * 1000;       // one suggestion a minute
+  const MAX_PER_HOUR = 5;
+  const STORE = "ocepvp.suggests";
+
   function show(message, ok) {
     notice.textContent = message;
     notice.className = "notice " + (ok ? "notice-ok" : "notice-bad");
@@ -157,59 +163,120 @@
     counter.textContent = details.value.length;
   });
 
+  /* Light friction only - it lives in this browser, so it stops accidents
+     and double-clicks rather than someone determined. */
+  function recentSends() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(STORE) || "[]");
+      const hourAgo = Date.now() - 60 * 60 * 1000;
+      return saved.filter(function (t) { return t > hourAgo; });
+    } catch (err) {
+      return [];
+    }
+  }
+
+  function rememberSend() {
+    try {
+      const sends = recentSends();
+      sends.push(Date.now());
+      localStorage.setItem(STORE, JSON.stringify(sends));
+    } catch (err) { /* private browsing - not important */ }
+  }
+
   form.addEventListener("submit", function (e) {
     e.preventDefault();
 
-    const payload = {
-      game: document.getElementById("s_game").value.trim(),
-      username: document.getElementById("s_username").value.trim(),
-      details: details.value.trim(),
-      website: document.getElementById("s_website").value
-    };
+    const webhook = typeof OCE_WEBHOOK === "string" ? OCE_WEBHOOK : "";
+    const game = document.getElementById("s_game").value.trim();
+    const username = document.getElementById("s_username").value.trim();
+    const text = details.value.trim();
+    const trap = document.getElementById("s_website").value;
 
-    if (payload.game.length < 2) {
+    if (!webhook) {
+      show("Suggestions aren't switched on yet — tell us in the Discord instead.", false);
+      return;
+    }
+    if (game.length < 2) {
       show("Give your game idea a name.", false);
       document.getElementById("s_game").focus();
       return;
     }
-    if (payload.username && !/^[A-Za-z0-9_]{3,16}$/.test(payload.username)) {
+    if (username && !/^[A-Za-z0-9_]{3,16}$/.test(username)) {
       show("That doesn't look like a Minecraft username (3-16 letters, numbers or _).", false);
       document.getElementById("s_username").focus();
+      return;
+    }
+
+    // Bots fill the hidden field. Pretend it worked and send nothing.
+    if (trap) {
+      form.reset();
+      counter.textContent = "0";
+      show("Thanks! Your suggestion was sent to the staff team.", true);
+      return;
+    }
+
+    const sends = recentSends();
+    const last = sends.length ? sends[sends.length - 1] : 0;
+    if (Date.now() - last < COOLDOWN_MS) {
+      show("Hold on a moment before sending another one.", false);
+      return;
+    }
+    if (sends.length >= MAX_PER_HOUR) {
+      show("You've sent a few suggestions already — try again later.", false);
       return;
     }
 
     button.disabled = true;
     button.textContent = "Sending...";
 
-    const base = typeof OCE_API === "string" ? OCE_API : "";
-    if (!base) {
-      show("Suggestions aren't switched on yet. Try the Discord instead.", false);
-      button.disabled = false;
-      button.textContent = "Send suggestion";
-      return;
-    }
+    const payload = {
+      username: "OcePvP Suggestions",
+      // stops anyone using a suggestion to ping @everyone
+      allowed_mentions: { parse: [] },
+      embeds: [
+        {
+          title: game.slice(0, 250),
+          description: text ? text.slice(0, 1000) : "_No details given._",
+          color: 0x22d3ee,
+          fields: [
+            {
+              name: "From",
+              value: username ? "`" + username + "`" : "_Anonymous_",
+              inline: true
+            }
+          ],
+          footer: { text: "Sent from the Games page" },
+          timestamp: new Date().toISOString()
+        }
+      ]
+    };
 
-    fetch(base + "/api/suggestions", {
+    fetch(webhook, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
     })
       .then(function (res) {
-        return res.json().catch(function () {
-          throw new Error("The server didn't answer properly. Try again later.");
-        });
-      })
-      .then(function (data) {
-        if (!data.ok) throw new Error(data.error || "Something went wrong.");
+        if (res.status === 429) {
+          throw new Error("Too many suggestions right now — try again in a minute.");
+        }
+        if (res.status === 401 || res.status === 403 || res.status === 404) {
+          throw new Error("The suggestion box isn't working right now. Tell us in the Discord.");
+        }
+        if (!res.ok) throw new Error("That didn't send. Try again in a moment.");
+
+        rememberSend();
         form.reset();
         counter.textContent = "0";
         show("Thanks! Your suggestion was sent to the staff team.", true);
       })
       .catch(function (err) {
-        const msg = err instanceof TypeError
-          ? "Couldn't reach the server. Check your connection and try again."
-          : err.message;
-        show(msg, false);
+        show(
+          err instanceof TypeError
+            ? "Couldn't reach Discord. Check your connection and try again."
+            : err.message,
+          false
+        );
       })
       .finally(function () {
         button.disabled = false;
