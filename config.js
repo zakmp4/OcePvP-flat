@@ -21,4 +21,4 @@
    staff channel, never anything important.
    ============================================================ */
 
-const OCE_WEBHOOK = "";
+const OCE_WEBHOOK = "https://discord.com/api/webhooks/1551118714739499041/aHJp1mXGJC1ox8QWn75PCCC1zR1FhAW2xKb5xe2aRtDSLB7McU_BR5WO2F2pDc9sS8o3";
